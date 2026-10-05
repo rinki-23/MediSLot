@@ -23,8 +23,8 @@ public class Slots {
 	@ManyToOne
 	@JoinColumn(name = "doctor_id")
 	private Doctors doctor;
-	private LocalDate slot_date;
-	private LocalTime start_time;
+	private LocalDate slotdate;
+	private LocalTime startTime;
 	@Enumerated(EnumType.STRING)
 	private SlotStatus status;
 	
@@ -33,12 +33,12 @@ public class Slots {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Slots(int id, Doctors doctor, LocalDate slot_date, LocalTime start_time, SlotStatus status) {
+	public Slots(int id, Doctors doctor, LocalDate slotdate, LocalTime startTime, SlotStatus status) {
 		super();
 		this.id = id;
 		this.doctor = doctor;
-		this.slot_date = slot_date;
-		this.start_time = start_time;
+		this.slotdate = slotdate;
+		this.startTime = startTime;
 		this.status = status;
 	}
 
@@ -58,20 +58,20 @@ public class Slots {
 		this.doctor = doctor;
 	}
 
-	public LocalDate getSlot_date() {
-		return slot_date;
+	public LocalDate getSlotdate() {
+		return slotdate;
 	}
 
-	public void setSlot_date(LocalDate slot_date) {
-		this.slot_date = slot_date;
+	public void setSlotdate(LocalDate slotdate) {
+		this.slotdate = slotdate;
 	}
 
-	public LocalTime getStart_time() {
-		return start_time;
+	public LocalTime getStartTime() {
+		return startTime;
 	}
 
-	public void setStart_time(LocalTime start_time) {
-		this.start_time = start_time;
+	public void setStartTime(LocalTime startTime) {
+		this.startTime = startTime;
 	}
 
 	public SlotStatus getStatus() {
@@ -84,10 +84,9 @@ public class Slots {
 
 	@Override
 	public String toString() {
-		return "Slots [id=" + id + ", doctor=" + doctor + ", slot_date=" + slot_date + ", start_time=" + start_time
+		return "Slots [id=" + id + ", doctor=" + doctor + ", slotdate=" + slotdate + ", startTime=" + startTime
 				+ ", status=" + status + "]";
 	}
-	
-	
+
 	
 }
