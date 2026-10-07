@@ -1,6 +1,8 @@
 package com.medislot.service;
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,5 +36,9 @@ public class PatientService {
 		return patientRepo.save(patient);
 		
 		
+	}
+	
+	public List<Patient> getAll() {
+		return patientRepo.findAll();
 	}
 }

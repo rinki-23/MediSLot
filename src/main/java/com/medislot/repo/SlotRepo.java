@@ -3,6 +3,7 @@ package com.medislot.repo;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -17,4 +18,6 @@ public interface SlotRepo extends JpaRepository<Slots, Integer>{
 	boolean existsByDoctorAndSlotdateAndStartTime(Doctors doctor, LocalDate slotdate, LocalTime startTime);
 	
 	public List<Slots> findByDoctorAndSlotdateAndStatus(Doctors doctor, LocalDate slotdate, SlotStatus status);
+	
+	public Optional<Slots> findById(int id);
 }
