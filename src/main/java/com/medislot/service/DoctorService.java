@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 import com.medislot.entity.Doctors;
 import com.medislot.entity.Role;
 import com.medislot.entity.Users;
+import com.medislot.exception.BadRequestException;
+import com.medislot.exception.DuplicateResourceException;
+import com.medislot.exception.ResourceNotFoundException;
 import com.medislot.repo.DoctorRepo;
 import com.medislot.repo.UserRepo;
 
@@ -24,15 +27,15 @@ public class DoctorService {
 	public Doctors createDoctorprofile(int id, Doctors doctor) {
 		// find the user , if not found then throw exception
 		Users user = userRepo.findById(id)
-				.orElseThrow(()->new RuntimeException("User id does not exist"));
+				.orElseThrow(()->new ResourceNotFoundException("User id does not exists"));
 	
 		// role must be doctor
 		if(user.getRole() != Role.DOCTOR ) {
-			throw new RuntimeException("Role of user must be doctor");
+			throw new BadRequestException("Role of user must be doctor");
 		}
 		// this user must not have a doctor profile
 		if(doctorRepo.existsByUser(user)) {
-			throw new RuntimeException("doctor profile already exist");
+			throw new DuplicateResourceException("doctor profile already exists");
 		}
 		doctor.setUser(user);
 		return doctorRepo.save(doctor);

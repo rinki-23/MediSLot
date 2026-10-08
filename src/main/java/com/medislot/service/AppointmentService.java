@@ -10,6 +10,9 @@ import com.medislot.entity.Appointmments;
 import com.medislot.entity.Patient;
 import com.medislot.entity.SlotStatus;
 import com.medislot.entity.Slots;
+import com.medislot.exception.BadRequestException;
+import com.medislot.exception.DuplicateResourceException;
+import com.medislot.exception.ResourceNotFoundException;
 import com.medislot.repo.AppointmentRepo;
 import com.medislot.repo.PatientRepo;
 import com.medislot.repo.SlotRepo;
@@ -31,13 +34,13 @@ public class AppointmentService {
 	@Transactional
 	public Appointmments bookAppointments(int patienttid, int slotid) {
 		Patient patient = patientRepo.findById(patienttid)
-				.orElseThrow(()->new RuntimeException("Patient id not found"));
+				.orElseThrow(()->new ResourceNotFoundException("Patient id not found"));
 	
 		Slots slot = slotRepo.findById(slotid)
-				.orElseThrow(()-> new RuntimeException("Slot not found"));
+				.orElseThrow(()-> new ResourceNotFoundException("Slot not found"));
 		
 		if(slot.getStatus() != SlotStatus.AVAILABLE) {
-			throw new RuntimeException("Slot already booked");
+			throw new BadRequestException("Slot already booked");
 		}
 		
 		Appointmments app = new Appointmments();
@@ -58,11 +61,11 @@ public class AppointmentService {
 	public Appointmments cancelAppointments(int id) {
 		// find the appointment, throw if does not exist
 		Appointmments app = appointmentRepo.findById(id)
-		.orElseThrow(()-> new RuntimeException("Appointment not found"));
+		.orElseThrow(()-> new ResourceNotFoundException("Appointment not found"));
 		
 		// block double cancel, otherwise the slot could be freed twice
 		if(app.getStatus() == Appointmentstatus.CANCELLED) {
-			throw new RuntimeException("Already Cancelled");
+			throw new BadRequestException("Already Cancelled");
 		}
 		app.setStatus(Appointmentstatus.CANCELLED);
 		

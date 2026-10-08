@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 import com.medislot.entity.Doctors;
 import com.medislot.entity.SlotStatus;
 import com.medislot.entity.Slots;
+import com.medislot.exception.BadRequestException;
+import com.medislot.exception.DuplicateResourceException;
+import com.medislot.exception.ResourceNotFoundException;
 import com.medislot.repo.DoctorRepo;
 import com.medislot.repo.SlotRepo;
 
@@ -24,14 +27,14 @@ public class SlotService {
 	// add slot
 	public Slots add(int id, Slots slot) {
 		Doctors doctor = doctorRepo.findById(id)
-				.orElseThrow(()->new RuntimeException("Doctor id does not exist"));
+				.orElseThrow(()->new ResourceNotFoundException("Doctor id does not exist"));
 		
 		if(slot.getSlotdate().isBefore(LocalDate.now())) {
-			throw new RuntimeException("Before date is not valid");
+			throw new BadRequestException("Slot date cannot be in the past");
 		}
 		
 		if(slotRepo.existsByDoctorAndSlotdateAndStartTime(doctor, slot.getSlotdate(), slot.getStartTime())) {
-			throw new RuntimeException("Slot already exists");
+			throw new DuplicateResourceException("Slot already exists for this doctor at the given date and time");
 		}
 		slot.setDoctor(doctor);
 		slot.setStatus(SlotStatus.AVAILABLE);
@@ -40,12 +43,13 @@ public class SlotService {
 	
 	public List<Slots> getAvailableSlots(int id, LocalDate date) {
 		Doctors doctor = doctorRepo.findById(id)
-				.orElseThrow(()->new RuntimeException("Doctor id does not exist"));
+				.orElseThrow(()->new BadRequestException("Doctor id does not exist"));
 		
 		List<Slots> s = slotRepo.findByDoctorAndSlotdateAndStatus(doctor, date, SlotStatus.AVAILABLE);
 		return s;
 	}
 	
+	// delete slot
 	public void delete(int id) {
 		slotRepo.deleteById(id);
 	}
