@@ -4,7 +4,9 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
 
 import com.medislot.entity.Users;
 import com.medislot.exception.DuplicateResourceException;
@@ -13,6 +15,8 @@ import com.medislot.repo.UserRepo;
 @Service
 public class UserService {
 	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	
 	@Autowired
 	private UserRepo userRepo;
@@ -22,7 +26,8 @@ public class UserService {
 		if(userRepo.existsByEmail(user.getEmail())) {
 			throw new DuplicateResourceException("Email already exists");
 		}
-		
+		String hashed = passwordEncoder.encode(user.getPassword());
+		user.setPassword(hashed);
 		return userRepo.save(user);
 		
 	}

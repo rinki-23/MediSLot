@@ -16,6 +16,7 @@ import com.medislot.service.UserService;
 @RequestMapping("/users")
 public class UserController {
 
+	
 	@Autowired
 	private UserService userService;
 	
