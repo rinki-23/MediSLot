@@ -7,8 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-
+import com.medislot.entity.Role;
 import com.medislot.entity.Users;
+import com.medislot.exception.BadRequestException;
 import com.medislot.exception.DuplicateResourceException;
 import com.medislot.repo.UserRepo;
 
@@ -25,6 +26,13 @@ public class UserService {
 		// check the given email is existed or not
 		if(userRepo.existsByEmail(user.getEmail())) {
 			throw new DuplicateResourceException("Email already exists");
+		}
+		Role role = user.getRole();
+		if(role == null) {
+			throw new BadRequestException("Role is required");
+		}
+		if(role.equals(Role.ADMIN)) {
+			throw new BadRequestException("Admin role is not allowed");
 		}
 		String hashed = passwordEncoder.encode(user.getPassword());
 		user.setPassword(hashed);
