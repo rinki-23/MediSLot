@@ -2,6 +2,7 @@ package com.medislot.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import  com.medislot.exception.ErrorResponse;
@@ -52,5 +53,12 @@ public class GlobalExceptionHandler {
 		
 		return new ResponseEntity<>(body, status);
 		
+	}
+	
+	// Runs when the login password/email is wrong(thrown by authenticationManager.authenticate)
+	
+	@ExceptionHandler(BadCredentialsException.class)
+	public ResponseEntity<ErrorResponse> handleBadCredentials(BadCredentialsException ex, HttpServletRequest request){
+		return buildResponse(HttpStatus.UNAUTHORIZED, "Invalid email or password", request);
 	}
 }

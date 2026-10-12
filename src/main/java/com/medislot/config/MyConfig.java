@@ -2,7 +2,9 @@ package com.medislot.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -26,7 +28,7 @@ public class MyConfig {
 		csrf.disable())
 		
 		.authorizeHttpRequests(auth->auth
-		.requestMatchers("/users/register").permitAll()
+		.requestMatchers("/users/register", "/users/login").permitAll()
 		.requestMatchers("/slot/available/{id}/{date}", "/doctor/getall", "/doctor/get/{id}").authenticated()
 		
 		.requestMatchers("/slot/add/{id}", "/slot/delete/{id}", "/patient/getAll", "/doctor/profile/{id}", 
@@ -67,6 +69,14 @@ public class MyConfig {
 	//}
 	
 	
+	// step 2
+	// Authentication Manager checks email + password for us
+	// Internally it uses MyUserDetailsService(to load the user) and BCrypt(to match the password)
+	//Spring does not expose it as a bean by default, so we create it here
+	@Bean
+	public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception{
+		return config.getAuthenticationManager();
+	}
 	
 	@Bean
 	public PasswordEncoder passwordEncoder() {
