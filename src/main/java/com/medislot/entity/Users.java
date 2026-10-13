@@ -1,5 +1,7 @@
 package com.medislot.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -19,6 +21,11 @@ public class Users {
 	private String name;
 	@Column(name = "email", unique = true)
 	private String email;
+	
+	// IN means password goes to client to server
+	// OUT means password goes to server to client
+	//password can come IN(register request) but never goes OUT
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	private String password;
 	
 	@Enumerated(EnumType.STRING)
