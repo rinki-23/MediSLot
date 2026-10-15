@@ -1,6 +1,7 @@
 package com.medislot.service;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import com.medislot.exception.DuplicateResourceException;
 import com.medislot.exception.ResourceNotFoundException;
 import com.medislot.repo.DoctorRepo;
 import com.medislot.repo.SlotRepo;
+import com.medislot.security.SecurityUtil;
 
 @Service
 public class SlotService {
@@ -29,8 +31,15 @@ public class SlotService {
 		Doctors doctor = doctorRepo.findById(id)
 				.orElseThrow(()->new ResourceNotFoundException("Doctor id does not exist"));
 		
+		// only the owner of this doctor profile can add slots
+		SecurityUtil.checkOwner(doctor.getUser().getEmail());
 		if(slot.getSlotdate().isBefore(LocalDate.now())) {
 			throw new BadRequestException("Slot date cannot be in the past");
+		}
+		
+		// if the date is today, the start time must still be in the future
+		if(slot.getSlotdate().isEqual(LocalDate.now()) && slot.getStartTime().isBefore(LocalTime.now())){
+			throw new BadRequestException("Slot start time has already passed");
 		}
 		
 		if(slotRepo.existsByDoctorAndSlotdateAndStartTime(doctor, slot.getSlotdate(), slot.getStartTime())) {
@@ -51,6 +60,10 @@ public class SlotService {
 	
 	// delete slot
 	public void delete(int id) {
+		Slots slot = slotRepo.findById(id)
+		.orElseThrow(()-> new ResourceNotFoundException("Slot not found"));
+		
+		SecurityUtil.checkOwner(slot.getDoctor().getUser().getEmail());
 		slotRepo.deleteById(id);
 	}
 }
