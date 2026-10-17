@@ -18,12 +18,20 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.medislot.security.JwtFilter;
+import com.medislot.service.JwtAccessDeniedHandler;
+import com.medislot.service.JwtAuthEntryPoint;
 
 @Configuration
 public class MyConfig {
 
 	@Autowired
 	private JwtFilter jwtFilter;
+	
+	@Autowired
+	private JwtAuthEntryPoint authEntryPoint;
+	
+	@Autowired
+	private JwtAccessDeniedHandler accessDeniedHandler;
 	
 	@Bean
 	public SecurityFilterChain securityFilter(HttpSecurity http) throws Exception{
@@ -36,6 +44,8 @@ public class MyConfig {
 		
 		// make stateless
 		.sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+		// use when we create Jwt AuthEntryPoint and JwtAccessDeniedHandler
+		.exceptionHandling(ex-> ex.authenticationEntryPoint(authEntryPoint).accessDeniedHandler(accessDeniedHandler))
 		
 		.authorizeHttpRequests(auth->auth
 		.requestMatchers("/users/register", "/users/login").permitAll()
