@@ -1,5 +1,7 @@
 package com.medislot.config;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,6 +18,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.medislot.security.JwtFilter;
 import com.medislot.service.JwtAccessDeniedHandler;
@@ -33,6 +38,30 @@ public class MyConfig {
 	@Autowired
 	private JwtAccessDeniedHandler accessDeniedHandler;
 	
+	//this bean tell spring which frontend are allowed to call our API 
+	@Bean
+	public CorsConfigurationSource corsConfigurationSource() {
+		CorsConfiguration config = new CorsConfiguration();
+		
+		// frontend addresses that are allowed
+		config.setAllowedOrigins(List.of(
+				"http://127.0.0.1:5500",
+				"http://localhost:5500"));
+		
+		//Http methods the frontend is allowed to use
+		// OPTIONS is the small "permission check" request the browser sned first
+		config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+		
+		// headers the frontend is allowed to send
+		// Authorization is needed because the jwt travels in this header
+		config.setAllowedHeaders(List.of("Authorization", "Content-Type"));
+		
+		// Apply this core rule to every URL of our API
+		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+		source.registerCorsConfiguration("/**", config);
+		
+		return source;
+	}
 	@Bean
 	public SecurityFilterChain securityFilter(HttpSecurity http) throws Exception{
 		http
@@ -41,7 +70,8 @@ public class MyConfig {
 		// postman want csrf token
 		.csrf(csrf->
 		csrf.disable())
-		
+		// Tells spring Security to use the CORS rules defined in the bean above
+		.cors(Customizer.withDefaults())
 		// make stateless
 		.sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 		// use when we create Jwt AuthEntryPoint and JwtAccessDeniedHandler
