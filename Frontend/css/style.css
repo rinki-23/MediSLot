@@ -1,0 +1,129 @@
+/* ---------- Basic page setup ---------- */
+* {
+    box-sizing: border-box;   /* padding width ke andar count ho */
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f1f5f9;      /* light grey-blue background */
+    color: #1e293b;
+    margin: 0;
+    padding: 24px;
+}
+
+/* ---------- Headings ---------- */
+h1, h2 {
+    text-align: center;
+    color: #0f766e;           /* teal, medical feel */
+}
+
+/* ---------- Inputs (login/register forms) ---------- */
+input {
+    display: block;
+    width: 100%;
+    max-width: 320px;
+    margin: 10px auto;
+    padding: 10px 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-size: 15px;
+}
+
+input:focus {
+    outline: none;
+    border-color: #0f766e;
+}
+
+/* ---------- Buttons ---------- */
+button {
+    background: #0f766e;
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #115e59;      /* thoda dark on hover */
+}
+
+/* Login button: form ke andar poori width */
+#loginBtn {
+    display: block;
+    width: 100%;
+    max-width: 320px;
+    margin: 14px auto;
+}
+
+/* Logout button: red, alag dikhe */
+#logoutBtn {
+    background: #dc2626;
+    display: block;
+    margin: 0 auto 20px auto;
+}
+
+#logoutBtn:hover {
+    background: #b91c1c;
+}
+
+/* ---------- Error / info messages ---------- */
+.error {
+    color: #dc2626;
+    text-align: center;
+    min-height: 20px;
+}
+
+#message {
+    text-align: center;
+    color: #475569;
+}
+
+/* ---------- Doctor list (patient page) ---------- */
+#doctorList {
+    list-style: none;         /* bullets hatao */
+    padding: 0;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+#doctorList li {
+    background: white;
+    padding: 14px 16px;
+    margin-bottom: 12px;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    display: flex;                  /* text left, button right */
+    justify-content: space-between;
+    align-items: center;
+}
+
+.conatiner{
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+}
+.actions{
+    margin: 14px 0;
+}
+.actions button{
+    margin: 0 6px;
+}
+#slotList{
+    list-style: none;
+    padding: 0;
+  
+    margin: 20px 0;
+}
+#slotList li{
+    background: white;
+    padding: 14px 16px;
+    margin-bottom: 12px;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    text-align: left;
+}

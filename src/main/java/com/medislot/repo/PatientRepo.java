@@ -12,5 +12,6 @@ import com.medislot.entity.Users;
 public interface PatientRepo extends JpaRepository<Patient, Integer>{
 	
 	public Optional<Patient> findById(int id);
+	public Optional<Patient> findByUserId(int id);
 	boolean existsByUser(Users user);
 }

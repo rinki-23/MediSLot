@@ -1,7 +1,9 @@
 package com.medislot.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,8 +15,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.medislot.entity.Patient;
 import com.medislot.entity.Users;
 import com.medislot.exception.ResourceNotFoundException;
+import com.medislot.repo.PatientRepo;
 import com.medislot.repo.UserRepo;
 import com.medislot.security.JwtUtil;
 import com.medislot.security.LoginRequest;
@@ -30,6 +34,9 @@ public class UserController {
 	
 	@Autowired
 	private AuthenticationManager authenticationManager;
+	
+	@Autowired
+	private PatientRepo patientRepo;
 	
 	@Autowired
 	private JwtUtil jwtUtil;
@@ -71,7 +78,17 @@ public class UserController {
 		//Step 4: create the jwt token using email and role
 		String token = jwtUtil.generateToken(email, role);
 		
+		Map<String, Object> response = new HashMap<>();
+		if(role.equals("PATIENT")) {
+			Patient patient = patientRepo.findByUserId(user.getId())
+					.orElseThrow(()-> new ResourceNotFoundException("ROle must be equals to Patinet"));
+			response.put("profileId", patient.getId());
+		}
 		// send the token back as JSON {"token", "eyJ..."}
-		return ResponseEntity.ok(Map.of("token", token));
+		
+		response.put("token", token);
+		response.put("role", role);
+		
+		return ResponseEntity.ok(response);
 	}
 }

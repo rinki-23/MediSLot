@@ -29,9 +29,14 @@ btn.addEventListener("click", async function(){
         // convert the response body(JSON text) into a JS object
         const data = await response.json();
         if(response.ok){
+            console.log(data);
             // login success : save the token in the browser for later requests
             localStorage.setItem("token", data.token);
-            alert("login successfully");
+              localStorage.setItem("role", data.role);
+                localStorage.setItem("profileId", data.profileId);
+            if(data.role === "PATIENT"){
+                window.location.href = "patient.html";
+            }
         }else{
             // login failed : show the message sent by our backend
             error.textContent = data.message || "login failed";
