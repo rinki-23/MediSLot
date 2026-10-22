@@ -46,3 +46,7 @@ document.getElementById("logoutBtn").addEventListener("click" , function(){
     localStorage.clear();
     window.location.href = "login.html";
 })
+
+document.getElementById("myAppBtn").addEventListener("click", function(){
+    window.location.href = "appointment.html";
+})

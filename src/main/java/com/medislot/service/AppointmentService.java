@@ -95,6 +95,8 @@ public class AppointmentService {
 		Slots slot = app.getSlot();
 		// free the slot so another patient can book it
 		slot.setStatus(SlotStatus.AVAILABLE);
+		
+	
 		// save both changes
 		slotRepo.save(slot);
 		return appointmentRepo.save(app);
