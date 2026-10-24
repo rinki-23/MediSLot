@@ -1,129 +1,293 @@
-/* ---------- Basic page setup ---------- */
-* {
-    box-sizing: border-box;   /* padding width ke andar count ho */
+/* ---------- Colors and sizes in one place ---------- */
+:root {
+    --primary: #0f766e;
+    --primary-dark: #115e59;
+    --primary-soft: #ccfbf1;
+    --bg: #f1f5f9;
+    --surface: #ffffff;
+    --text: #1e293b;
+    --muted: #64748b;
+    --border: #e2e8f0;
+    --danger: #dc2626;
+    --danger-dark: #b91c1c;
+    --radius: 10px;
+    --sidebar-w: 230px;
 }
+
+* { box-sizing: border-box; }
 
 body {
-    font-family: Arial, sans-serif;
-    background: #f1f5f9;      /* light grey-blue background */
-    color: #1e293b;
     margin: 0;
-    padding: 24px;
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
 }
 
-/* ---------- Headings ---------- */
-h1, h2 {
+/* ---------- Login / Register pages (centered card) ---------- */
+.container {
+    max-width: 420px;
+    margin: 60px auto;
+    background: var(--surface);
+    padding: 32px;
+    border-radius: 14px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
     text-align: center;
-    color: #0f766e;           /* teal, medical feel */
 }
 
-/* ---------- Inputs (login/register forms) ---------- */
+.container h1,
+.container h2 {
+    color: var(--primary);
+    margin-top: 0;
+}
+
+.container a {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+/* ---------- Inputs ---------- */
 input {
     display: block;
     width: 100%;
-    max-width: 320px;
-    margin: 10px auto;
-    padding: 10px 12px;
-    border: 1px solid #cbd5e1;
-    border-radius: 6px;
+    margin: 10px 0;
+    padding: 11px 12px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
     font-size: 15px;
+    background: #fff;
 }
 
 input:focus {
     outline: none;
-    border-color: #0f766e;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px var(--primary-soft);
 }
 
 /* ---------- Buttons ---------- */
 button {
-    background: #0f766e;
-    color: white;
+    background: var(--primary);
+    color: #fff;
     border: none;
-    padding: 8px 14px;
-    border-radius: 6px;
+    padding: 9px 16px;
+    border-radius: 8px;
     font-size: 14px;
+    font-weight: 600;
     cursor: pointer;
+    transition: background 0.15s;
 }
 
-button:hover {
-    background: #115e59;      /* thoda dark on hover */
-}
+button:hover { background: var(--primary-dark); }
 
-/* Login button: form ke andar poori width */
-#loginBtn {
-    display: block;
+#loginBtn, #registerBtn {
     width: 100%;
-    max-width: 320px;
-    margin: 14px auto;
+    margin: 14px 0;
+    padding: 12px;
+    font-size: 15px;
 }
 
-/* Logout button: red, alag dikhe */
-#logoutBtn {
-    background: #dc2626;
-    display: block;
-    margin: 0 auto 20px auto;
-}
+.btn-danger { background: var(--danger); }
+.btn-danger:hover { background: var(--danger-dark); }
 
-#logoutBtn:hover {
-    background: #b91c1c;
+.btn-secondary {
+    background: #fff;
+    color: var(--primary);
+    border: 1px solid var(--primary);
 }
+.btn-secondary:hover { background: var(--primary-soft); }
 
-/* ---------- Error / info messages ---------- */
+/* ---------- Messages ---------- */
 .error {
-    color: #dc2626;
-    text-align: center;
+    color: var(--danger);
     min-height: 20px;
 }
 
 #message {
-    text-align: center;
-    color: #475569;
+    color: var(--muted);
+    min-height: 22px;
+    margin: 0 0 12px 0;
 }
 
-/* ---------- Doctor list (patient page) ---------- */
-#doctorList {
-    list-style: none;         /* bullets hatao */
-    padding: 0;
-    max-width: 600px;
-    margin: 0 auto;
+/* ---------- Dashboard layout ---------- */
+.layout { min-height: 100vh; }
+
+/* ----- Sidebar ----- */
+.sidebar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: var(--sidebar-w);
+    background: linear-gradient(180deg, #134e4a 0%, #0f3d3a 100%);
+    box-shadow: 2px 0 12px rgba(0, 0, 0, 0.15);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    padding: 20px 14px;
 }
 
-#doctorList li {
-    background: white;
-    padding: 14px 16px;
-    margin-bottom: 12px;
+.brand {
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    padding: 6px 10px 22px 10px;
+    margin-bottom: 18px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.sidebar nav {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex: 1;
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--primary-soft);
+    text-decoration: none;
+    padding: 12px 14px;
     border-radius: 8px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    display: flex;                  /* text left, button right */
+    border-left: 3px solid transparent;
+    font-size: 15px;
+    transition: background 0.15s;
+}
+
+.nav-link:hover { background: rgba(255, 255, 255, 0.1); }
+
+.nav-link.active {
+    background: rgba(255, 255, 255, 0.14);
+    border-left-color: #5eead4;
+    color: #fff;
+    font-weight: 600;
+}
+
+.sidebar .logout {
+    width: 100%;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    color: #fff;
+    padding: 11px;
+}
+
+.sidebar .logout:hover {
+    background: var(--danger);
+    border-color: var(--danger);
+}
+
+/* ----- Right side (topbar + content) ----- */
+.main {
+    margin-left: var(--sidebar-w);
+    min-width: 0;
+}
+
+.topbar {
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    display: flex;
     justify-content: space-between;
     align-items: center;
+    background: var(--surface);
+    padding: 16px 28px;
+    border-bottom: 1px solid var(--border);
 }
 
-.conatiner{
-    max-width: 600px;
-    margin: 0 auto;
-    text-align: center;
+.page-title {
+    margin: 0;
+    font-size: 20px;
+    color: var(--text);
+    text-align: left;
 }
-.actions{
-    margin: 14px 0;
+
+.role-badge {
+    background: var(--primary-soft);
+    color: var(--primary-dark);
+    padding: 5px 14px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 600;
 }
-.actions button{
-    margin: 0 6px;
+
+.content {
+    padding: 28px;
+    max-width: 900px;
 }
-#slotList{
+
+/* ---------- Date + buttons row (slots page) ---------- */
+.toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.toolbar input {
+    width: auto;
+    margin: 0;
+}
+
+#doctorInfo {
+    margin: 0 0 18px 0;
+    font-size: 18px;
+    color: var(--primary-dark);
+}
+
+/* ---------- Cards for doctors, slots, appointments ---------- */
+#doctorList, #slotList, #appointmentList {
     list-style: none;
     padding: 0;
-  
-    margin: 20px 0;
+    margin: 0;
 }
-#slotList li{
-    background: white;
-    padding: 14px 16px;
-    margin-bottom: 12px;
-    border-radius: 8px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+
+#doctorList li, #slotList li, #appointmentList li {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
-    text-align: left;
+    gap: 12px;
+    background: var(--surface);
+    padding: 16px 18px;
+    margin-bottom: 12px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+#doctorList li:hover, #slotList li:hover {
+    border-color: var(--primary);
+}
+
+/* ---------- Status badges (appointments) ---------- */
+.badge {
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+}
+.badge.booked    { background: #dcfce7; color: #166534; }
+.badge.cancelled { background: #fee2e2; color: #991b1b; }
+
+/* ---------- Mobile / small screens ---------- */
+@media (max-width: 768px) {
+    .sidebar {
+        position: static;
+        width: 100%;
+        flex-direction: row;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 8px;
+        padding: 10px 14px;
+    }
+    .brand {
+        padding: 0 12px 0 0;
+        margin: 0;
+        border-bottom: none;
+    }
+    .sidebar nav { flex-direction: row; flex: 1; }
+    .sidebar .logout { width: auto; }
+    .main { margin-left: 0; }
+    .topbar, .content { padding: 14px 16px; }
 }

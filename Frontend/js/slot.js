@@ -8,6 +8,7 @@ const message = document.getElementById("message");
 const searchBtn = document.getElementById("searchBtn");
 const slotList = document.getElementById("slotList");
 const doctorInfo = document.getElementById("doctorInfo");
+const backBtn = document.getElementById("backBtn");
 // add event listener on search btn
 searchBtn.addEventListener("click", showSlot)
 async function showSlot() {
@@ -55,4 +56,9 @@ async function showSlot() {
     item.appendChild(button);
     slotList.appendChild(item);
   })
+
+
 }
+  backBtn.addEventListener("click", function(){
+    window.location.href = "patient.html";
+  })

@@ -85,6 +85,12 @@ if(response.status === 401){
 return response;
 }
 
+document.addEventListener("click", function (e){
+    if(e.target.classList.contains("logout")){
+        localStorage.clear();
+        window.location.href = "login.html";
+    }
+});
 
 
 

@@ -1,5 +1,6 @@
 const message = document.getElementById("message");
 const appList = document.getElementById("appointmentList");
+const backBtn = document.getElementById("backBtn");
 
 async function loadAppointment(){
    const patientId =  localStorage.getItem("profileId");
@@ -48,3 +49,7 @@ async function loadAppointment(){
     });
 }
 loadAppointment();
+
+backBtn.addEventListener("click", function(){
+    window.location.href = "patient.html";
+  })

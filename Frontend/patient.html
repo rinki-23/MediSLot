@@ -7,16 +7,40 @@
      <link href = "css/style.css" rel = "stylesheet">
 </head>
 <body>
+
     
-    <h2>Available Doctors</h2>
-    
-    <p id = "message"></p>
-    <ul id = "doctorList"></ul>
-    <button id = "logoutBtn">Logout</button>
+  <div class="layout">
+
+    <aside class="sidebar">
+      <div class="brand">MediSlot</div>
+      <nav>
+        <a href="patient.html" class="nav-link active">Doctors</a>
+        <a href="appointment.html" class="nav-link">My Appointments</a>
+      </nav>
+      <button type="button" class="logout">Logout</button>
+    </aside>
+
+    <div class="main">
+      <header class="topbar">
+        <h1 class="page-title">Available Doctors</h1>
+        <span class="role-badge">Patient</span>
+      </header>
+
+      <main class="content">
+        <!-- old content: same ids as before -->
+        <p id="message"></p>
+        <button id = "logoutBtn">Logout</button>
 
     <button id = "myAppBtn">My Appointments</button>
-    <script src = "js/api.js"></script>
-    <script src = "js/patient.js"></script>
+        
+        <ul id="doctorList"></ul>
+      </main>
+    </div>
 
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/patient.js"></script>
 </body>
+
 </html>

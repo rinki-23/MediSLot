@@ -7,18 +7,52 @@
     <link href = "css/style.css" rel = "stylesheet">
 </head>
 <body>
-    <div class = "container">
-     <h1 id = "doctorInfo"></h1>   
-    <p id = "message"></p>
+
+  <div class="layout">
+
+    <aside class="sidebar">
+      <div class="brand">MediSlot</div>
+      <nav>
+        <a href="patient.html" class="nav-link active">Doctors</a>
+        <a href="appointment.html" class="nav-link">My Appointments</a>
+      </nav>
+      <button type="button" class="logout">Logout</button>
+    </aside>
+
+    <div class="main">
+      <header class="topbar">
+        <h1 class="page-title">Book a Slot</h1>
+        <span class="role-badge">Patient</span>
+      </header>
+
+      <main class="content">
+        <!-- old content: same ids as before -->
+         <p id="message"></p>
+          <h1 id = "doctorInfo"></h1>   
+   
     <input type = "date" id = "dateInput">
-    <ul id = "slotList"></ul>
+      <ul id="slotList"></ul>
     <div class = "actions">
     <button type = "submit" id = "searchBtn">Show Slots</button>
    <button  type = "submit" id = "backBtn">Back</button>
    </div>
-</div>
-      <script src = "js/api.js"></script>
-    <script src = "js/slot.js"></script>
+        
+      
+      </main>
+    </div>
 
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src = "js/slot.js"></script>
 </body>
+
+
+
+    
+
+    
+   
+
+
 </html>

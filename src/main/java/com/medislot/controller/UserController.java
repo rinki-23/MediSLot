@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.medislot.entity.Patient;
+import com.medislot.entity.RegisterRequest;
 import com.medislot.entity.Users;
 import com.medislot.exception.ResourceNotFoundException;
 import com.medislot.repo.PatientRepo;
@@ -45,9 +46,9 @@ public class UserController {
 	private UserRepo userRepo;
 	
 	@PostMapping("/register")
-	public Users register( @RequestBody Users user) {
-		
-		return userService.register(user);
+	public Map<String, Object> register( @RequestBody RegisterRequest request) {
+		userService.register(request);
+		return Map.of("message", "Registered Successfully");
 	}
 	
 	@GetMapping("/getAll")
