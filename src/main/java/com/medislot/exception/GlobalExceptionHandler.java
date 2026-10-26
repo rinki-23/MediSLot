@@ -70,6 +70,7 @@ public class GlobalExceptionHandler {
 	
 	@ExceptionHandler(HttpMessageNotReadableException.class)
 	public ResponseEntity<ErrorResponse> handleBadJson(HttpMessageNotReadableException ex, HttpServletRequest request){
-		return buildResponse(HttpStatus.BAD_REQUEST, "Invalid request body. Use date as yyyy-MM-dd and time is HH:mm", request);
+		System.out.println(ex.getMostSpecificCause().getMessage());
+		return buildResponse(HttpStatus.BAD_REQUEST, "Invalid request body. Check the field and their types", request);
 	}
 }

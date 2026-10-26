@@ -34,8 +34,16 @@ btn.addEventListener("click", async function(){
             localStorage.setItem("token", data.token);
               localStorage.setItem("role", data.role);
                 localStorage.setItem("profileId", data.profileId);
+                if(data.profileId){
+                    localStorage.setItem("profileId", data.profileId);
+                }
             if(data.role === "PATIENT"){
                 window.location.href = "patient.html";
+            }else if(data.role === "DOCTOR"){
+                window.location.href = "doctor.html";
+            }
+            else if(data.role === "ADMIN"){
+                window.location.href = "admin.html";
             }
         }else{
             // login failed : show the message sent by our backend

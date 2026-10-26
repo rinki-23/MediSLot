@@ -18,7 +18,7 @@ public class Slots {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	private Integer id;
 	
 	@ManyToOne
 	@JoinColumn(name = "doctor_id")
@@ -33,7 +33,7 @@ public class Slots {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Slots(int id, Doctors doctor, LocalDate slotdate, LocalTime startTime, SlotStatus status) {
+	public Slots(Integer id, Doctors doctor, LocalDate slotdate, LocalTime startTime, SlotStatus status) {
 		super();
 		this.id = id;
 		this.doctor = doctor;
@@ -46,7 +46,7 @@ public class Slots {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

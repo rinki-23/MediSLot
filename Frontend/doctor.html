@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediSlot - Doctor</title>
+    <link href = "css/style.css" rel = "stylesheet">
+</head>
+<body>
+    
+     <div class="layout">
+
+    <aside class="sidebar">
+      <div class="brand">MediSlot</div>
+      <nav>
+        <a href="doctor.html" class="nav-link active">Appointments</a>
+        <a href="doctor-slots.html" class="nav-link">My Slots</a>
+      </nav>
+      <button type="button" class="logout">Logout</button>
+    </aside>
+
+    <div class="main">
+      <header class="topbar">
+        <h1 class="page-title">Doctors Dashboard</h1>
+        <span class="role-badge">Doctor</span>
+      </header>
+
+      <main class="content">
+        <p id = "message"></p>
+        <ul id = "appointmentList"></ul>
+
+        </main>
+    </div>
+
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/doctor.js"></script>
+</body>
+</html>

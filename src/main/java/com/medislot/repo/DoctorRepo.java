@@ -16,4 +16,6 @@ public interface DoctorRepo extends JpaRepository<Doctors, Integer>{
 	public Doctors findBySpecialization(String specialization);
 	
 	boolean existsByUser(Users user);
+	
+	public Optional<Doctors> findByUserId(int id);
 }

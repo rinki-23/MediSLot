@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.medislot.entity.DoctorRequest;
 import com.medislot.entity.Doctors;
 import com.medislot.service.DoctorService;
 
@@ -35,4 +36,6 @@ public class DoctorController {
 	public Optional<Doctors> getDoctorById(@PathVariable("id") int id) {
 		return doctorService.getById(id);
 	}
+	
+	
 }

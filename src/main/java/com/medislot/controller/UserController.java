@@ -15,10 +15,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.medislot.entity.Doctors;
 import com.medislot.entity.Patient;
 import com.medislot.entity.RegisterRequest;
 import com.medislot.entity.Users;
 import com.medislot.exception.ResourceNotFoundException;
+import com.medislot.repo.DoctorRepo;
 import com.medislot.repo.PatientRepo;
 import com.medislot.repo.UserRepo;
 import com.medislot.security.JwtUtil;
@@ -38,6 +40,9 @@ public class UserController {
 	
 	@Autowired
 	private PatientRepo patientRepo;
+	
+	@Autowired
+	private DoctorRepo doctorRepo;
 	
 	@Autowired
 	private JwtUtil jwtUtil;
@@ -82,8 +87,12 @@ public class UserController {
 		Map<String, Object> response = new HashMap<>();
 		if(role.equals("PATIENT")) {
 			Patient patient = patientRepo.findByUserId(user.getId())
-					.orElseThrow(()-> new ResourceNotFoundException("ROle must be equals to Patinet"));
+					.orElseThrow(()-> new ResourceNotFoundException("Role must be equals to Patinet"));
 			response.put("profileId", patient.getId());
+		}else if(role.equals("DOCTOR")) {
+			Doctors doctor = doctorRepo.findByUserId(user.getId())
+					.orElseThrow(()-> new ResourceNotFoundException("Role must be equal to doctor"));
+			response.put("profileId", doctor.getId());
 		}
 		// send the token back as JSON {"token", "eyJ..."}
 		

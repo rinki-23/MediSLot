@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediSlot - Admin</title>
+    <link href = "css/style.css" rel = "stylesheet">
+</head>
+<body>
+    
+     <div class="layout">
+
+    <aside class="sidebar">
+      <div class="brand">MediSlot</div>
+      <nav>
+        <a href="admin.html" class="nav-link active">Add Doctor</a>
+       
+      </nav>
+      <button type="button" class="logout">Logout</button>
+    </aside>
+
+    <div class="main">
+      <header class="topbar">
+        <h1 class="page-title">Admin Dashboard</h1>
+        <span class="role-badge">Admin</span>
+      </header>
+
+      <main class="content">
+        <p id = "message"></p>
+        <input type = "text" id = "name" placeholder = "Enter name">
+        <input type = "email" id = "email" placeholder="Enter email">
+        <input type = "password" id = "password" placeholder = "Enter password">
+        <input type = "text" id = "specialization" placeholder = "Enter specialization">
+        <input type = "text" id = "experience" placeholder="Enter experience">
+        <input type = "text" id = "fees" placeholder="Enter fees">
+        <button id = "addBtn" type = "submit">Add Doctor</button>
+        
+       
+        </main>
+    </div>
+
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>

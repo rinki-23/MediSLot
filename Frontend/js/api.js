@@ -30,7 +30,7 @@ if(response.status === 401){
 return response;
 }
 
-async function apiPost(path){
+async function apiPost(path, body){
 
      // read the token that was saved at login time
     const token = localStorage.getItem("token");
@@ -43,7 +43,10 @@ async function apiPost(path){
 
     const response = await fetch(BASE_URL + path, {
         method : "POST",
-     headers : { "Authorization" : "Bearer " + token}
+     headers : { 
+        "Content-Type" : "application/json",
+        "Authorization" : "Bearer " + token},
+     body : JSON.stringify(body)
 });
 
 // 401 means token is missing, wrong or expired , so login again
@@ -71,14 +74,53 @@ async function apiPut(path){
 
     const response = await fetch(BASE_URL + path, {
         method : "PUT",
-     headers : { "Authorization" : "Bearer " + token}
+     headers : {
+        "Content-Type" : "application/json",
+        "Authorization" : "Bearer " + token}
 });
 
 // 401 means token is missing, wrong or expired , so login again
 if(response.status === 401){
     localStorage.clear();
     window.location.href = "login.html";
-    return null;
+    return;
+}
+
+// give the response back to the page that called us
+return response;
+}
+
+document.addEventListener("click", function (e){
+    if(e.target.classList.contains("logout")){
+        localStorage.clear();
+        window.location.href = "login.html";
+    }
+});
+
+
+async function apiDelete(path){
+
+     // read the token that was saved at login time
+    const token = localStorage.getItem("token");
+
+    // no token means user is not logged in , so go to login page
+    if(!token){
+        window.location.href = "login.html";
+        return null;
+    }
+
+    const response = await fetch(BASE_URL + path, {
+        method : "DELETE",
+     headers : {
+       
+        "Authorization" : "Bearer " + token}
+});
+
+// 401 means token is missing, wrong or expired , so login again
+if(response.status === 401){
+    localStorage.clear();
+    window.location.href = "login.html";
+    return;
 }
 
 // give the response back to the page that called us
