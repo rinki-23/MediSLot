@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.medislot.entity.Appointmentstatus;
 import com.medislot.entity.Appointmments;
+import com.medislot.entity.CompleteRequest;
 import com.medislot.entity.Doctors;
 import com.medislot.entity.Patient;
 import com.medislot.entity.SlotStatus;
@@ -89,6 +90,10 @@ public class AppointmentService {
 		if(app.getStatus() == Appointmentstatus.CANCELLED) {
 			throw new BadRequestException("Already Cancelled");
 		}
+		
+		if(app.getStatus() == Appointmentstatus.COMPLETED) {
+			throw new BadRequestException("Completed Appointment cannot be cancelled");
+		}
 		app.setStatus(Appointmentstatus.CANCELLED);
 		
 		// get the slot linked to this appointment
@@ -124,5 +129,35 @@ public class AppointmentService {
 		
 		SecurityUtil.checkOwner(doctor.getUser().getEmail());
 		return appointmentRepo.findByDoctorId(id);
+	}
+	
+	// for completed appointments
+	@Transactional
+	public Appointmments completeAppointments(int id, CompleteRequest request) {
+		Appointmments app = appointmentRepo.findById(id)
+				.orElseThrow(()-> new ResourceNotFoundException("Appointment not found"));
+		
+		Doctors doctor = app.getDoctor();
+		if(doctor == null) {
+			throw new BadRequestException("This appointment has no doctor assigned");
+		}
+		
+		SecurityUtil.checkOwner(doctor.getUser().getEmail());
+		
+		if(app.getStatus() != Appointmentstatus.BOOKED) {
+			throw new BadRequestException("Only booked appointments can be completed");
+		}
+		
+		
+		if(request.getDiagnosis() == null || request.getDiagnosis().isBlank() || request.getPrescription() == null ||
+				request.getPrescription().isBlank()) {
+			throw new BadRequestException("Diagnosis and Prescription is required");
+		}
+		
+		app.setStatus(Appointmentstatus.COMPLETED);
+		app.setDiagnosis(request.getDiagnosis());
+		app.setPrescription(request.getPrescription());
+		
+		return appointmentRepo.save(app);
 	}
 }

@@ -269,7 +269,30 @@ button:hover { background: var(--primary-dark); }
 }
 .badge.booked    { background: #dcfce7; color: #166534; }
 .badge.cancelled { background: #fee2e2; color: #991b1b; }
+.badge.completed{ background: #dbeafe; color: #1e40af}
 
+/* allow the card to wrap so notes can go to a new line*/
+#appointmentList li{
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.app-main{
+    display: flex;
+    align-items: center;
+    gap : 12px;
+    flex-wrap: wrap;
+
+}
+
+.notes{
+    width: 100%;
+    margin : 10px 0 0;
+    padding-top: 10px;
+    border-top: 1px dashed #cbd5e1;
+    color : #475569;
+    font-size: 14px;
+}
 /* ---------- Mobile / small screens ---------- */
 @media (max-width: 768px) {
     .sidebar {

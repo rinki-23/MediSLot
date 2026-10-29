@@ -97,4 +97,6 @@ public class DoctorService {
 		doctorRepo.save(doctor);
 		return Map.of("message", "Doctor created successfully");
 	}
+	
+
 }

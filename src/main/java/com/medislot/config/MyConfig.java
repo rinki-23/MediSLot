@@ -82,10 +82,10 @@ public class MyConfig {
 		.requestMatchers("/slot/available/{id}/{date}", "/doctor/getall", "/doctor/get/{id}").authenticated()
 		
 		.requestMatchers("/slot/add/{id}", "/slot/delete/{id}", "/patient/getAll", "/doctor/profile/{id}", 
-				"/appointments/doctor/{id}").hasRole("DOCTOR")
+				"/appointments/doctor/{id}", "/appointments/complete/{id}").hasRole("DOCTOR")
 		
 		.requestMatchers("/patient/profile/{id}", 
-				"/appointments/book/{pid}/{sid}", "/appointments/patient/{id}")
+				"/appointments/book/{pid}/{sid}", "/appointments/patient/{id}", "/patient/update/{id}")
 		.hasRole("PATIENT")
 		
 		.requestMatchers("/users/getAll", "/admin/doctors").hasRole("ADMIN")

@@ -7,10 +7,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.medislot.entity.Appointmments;
+import com.medislot.entity.CompleteRequest;
 import com.medislot.service.AppointmentService;
 
 @RestController
@@ -40,5 +42,8 @@ public class AppointmentController {
 		return appointmentService.viewDoctor(id);
 	}
 	
-	
+	@PutMapping("/complete/{id}")
+	public Appointmments completeAppointments(@PathVariable int id, @RequestBody CompleteRequest request) {
+		return appointmentService.completeAppointments(id, request);
+	}
 }

@@ -20,8 +20,20 @@ async function loadAppointment(){
     
     result.forEach(function(appointment){
         const li = document.createElement("li");
-        li.textContent = appointment.doctor.user.name + " | " + appointment.doctor.specialization + " | " + appointment.slot.slotdate + " | " + appointment.slot.startTime.substring(0,5) + " | " + appointment.status + "     ";
+        const info = document.createElement("span");
+        const badge = document.createElement("span");
         
+        info.textContent = appointment.doctor.user.name + " | " + appointment.doctor.specialization + " | " + appointment.slot.slotdate + " | " + appointment.slot.startTime.substring(0,5);  
+        badge.textContent = appointment.status;
+        badge.className = "badge "+ appointment.status.toLowerCase();
+
+        const left = document.createElement("div");
+        left.className = "app-main";
+        left.appendChild(info);
+        left.appendChild(badge);
+        li.appendChild(left);
+
+
         if(appointment.status === "BOOKED"){
             const cancel = document.createElement("button");
             cancel.textContent = "Cancel";
@@ -43,6 +55,13 @@ async function loadAppointment(){
               }
             });
               li.appendChild(cancel);
+        }
+
+        if(appointment.status === "COMPLETED"){
+          const notes = document.createElement("p");
+          notes.className = "notes";
+          notes.textContent = "Diagnosis: " + appointment.diagnosis + " | " + "Prescription: " + appointment.prescription;
+          li.appendChild(notes);
         }
       
         appList.appendChild(li);

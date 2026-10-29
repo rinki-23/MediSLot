@@ -61,7 +61,7 @@ return response;
 }
 
 
-async function apiPut(path){
+async function apiPut(path, body){
 
      // read the token that was saved at login time
     const token = localStorage.getItem("token");
@@ -76,8 +76,11 @@ async function apiPut(path){
         method : "PUT",
      headers : {
         "Content-Type" : "application/json",
-        "Authorization" : "Bearer " + token}
-});
+        "Authorization" : "Bearer " + token},
+        body : JSON.stringify(body)
+},
+
+);
 
 // 401 means token is missing, wrong or expired , so login again
 if(response.status === 401){
