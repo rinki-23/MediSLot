@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediSlot - All Doctors</title>
+    <link href = "css/style.css" rel = "stylesheet">
+</head>
+<body>
+    <div class="layout">
+
+    <aside class="sidebar">
+      <div class="brand">MediSlot</div>
+      <nav>
+        <a href="admin.html" class="nav-link ">➕ Add Doctor</a>
+         <a href="admin-doctors.html" class="nav-link active">All Doctors</a>
+       
+       
+      </nav>
+      <button type="button" class="logout">👤 Logout</button>
+    </aside>
+
+    <div class="main">
+      <header class="topbar">
+        <h1 class="page-title">Admin Dashboard</h1>
+        <span class="role-badge">Admin</span>
+      </header>
+
+
+      <main class="content">
+
+        <h2>All Doctors</h2>
+        <p id = "message"></p>
+        <ul id = "doctorList"></ul>
+        </main>
+    </div>
+
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/admin-doctors.js"></script>
+</body>
+</html>

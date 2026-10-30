@@ -49,9 +49,13 @@ public class AppointmentService {
 		Slots slot = slotRepo.findById(slotid)
 				.orElseThrow(()-> new ResourceNotFoundException("Slot not found"));
 		
+		if(!slot.getDoctor().isActive()) {
+			throw new BadRequestException("Doctor is not available");
+		}
 		if(slot.getStatus() != SlotStatus.AVAILABLE) {
 			throw new BadRequestException("Slot already booked");
 		}
+		
 		
 		Appointmments app = new Appointmments();
 		app.setPatient(patient);

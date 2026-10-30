@@ -53,7 +53,8 @@ public class DoctorService {
 	
 	// get all doctors
 	public List<Doctors> getAllDoctors() {
-		return doctorRepo.findAll();
+		// return doctors who are active
+		return doctorRepo.findByActiveTrue();
 	}
 	
 	// get doctor By id
@@ -96,6 +97,26 @@ public class DoctorService {
 		
 		doctorRepo.save(doctor);
 		return Map.of("message", "Doctor created successfully");
+	}
+	
+	// for admin
+	// get all doctor either it is active or inactive
+	public List<Doctors> getAllDoctorsForAdmin() {
+		return doctorRepo.findAll();
+	}
+	
+	@Transactional
+	public Map<String, Object> setDoctorStatus(int id, boolean active) {
+		Doctors doctor = doctorRepo.findById(id)
+				.orElseThrow(()-> new ResourceNotFoundException("Doctor not found"));
+		
+		String msg = active ? "Doctor enable" : "Doctor disable";
+		
+		doctor.setActive(active);
+		doctorRepo.save(doctor);
+		
+		return Map.of("message", msg);
+		
 	}
 	
 

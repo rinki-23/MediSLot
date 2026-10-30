@@ -20,19 +20,22 @@ public class Doctors {
 	private String specialization;
 	private int experience;
 	private double fees;
+	// for admin we required this,  for all doctor we take by default value is true
+	private boolean active = true;
 	
 	public Doctors() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Doctors(int id, Users user, String specialization, int experience, double fees) {
+	public Doctors(int id, Users user, String specialization, int experience, double fees, boolean active) {
 		super();
 		this.id = id;
 		this.user = user;
 		this.specialization = specialization;
 		this.experience = experience;
 		this.fees = fees;
+		this.active = active;
 	}
 
 	public int getId() {
@@ -75,11 +78,20 @@ public class Doctors {
 		this.fees = fees;
 	}
 
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+
 	@Override
 	public String toString() {
 		return "Doctors [id=" + id + ", user=" + user + ", specialization=" + specialization + ", experience="
-				+ experience + ", fees=" + fees + "]";
+				+ experience + ", fees=" + fees + ", active=" + active + "]";
 	}
+
 	
 	
 }

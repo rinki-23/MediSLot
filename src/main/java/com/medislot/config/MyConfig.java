@@ -88,7 +88,7 @@ public class MyConfig {
 				"/appointments/book/{pid}/{sid}", "/appointments/patient/{id}", "/patient/update/{id}")
 		.hasRole("PATIENT")
 		
-		.requestMatchers("/users/getAll", "/admin/doctors").hasRole("ADMIN")
+		.requestMatchers("/users/getAll", "/admin/doctors", "/admin/doctors/{id}/status").hasRole("ADMIN")
 		
 		.requestMatchers("/appointments/cancel/{id}").hasAnyRole("PATIENT", "DOCTOR")
 		// and for any other request

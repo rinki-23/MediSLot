@@ -1,5 +1,6 @@
 package com.medislot.repo;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -18,4 +19,7 @@ public interface DoctorRepo extends JpaRepository<Doctors, Integer>{
 	boolean existsByUser(Users user);
 	
 	public Optional<Doctors> findByUserId(int id);
+	
+	// only see active doctors to patient
+	public List<Doctors> findByActiveTrue();
 }
